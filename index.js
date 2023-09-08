@@ -21,24 +21,27 @@ async function performScraping() {
     // that will contain the scraped data
     const itemList = [];
 
-    // scraping the "The best customer experience in the industry" section
+    // scraping the "Popular Products" and "What's trending" from MSY homepage
     $(".body-container")
         .find("li")
         .each((index, element) => {
 
+            // extracting the product name
             const name = $(element).find("span[itemprop='name']").text();
-            // extracting the price of interest
+            // extracting the product price
             const price = $(element).find("span.goods-price").text();
 
-            const item = {
-                index: index,
-                name: name,
-                price: price,
+            // Filtering out blank values
+            if (name != '') {
+                const item = {
+                    index: index,
+                    name: name,
+                    price: price,
+                }
+                // adding the object containing the scraped data
+                // to the itemList array
+                itemList.push(item)
             }
-
-            // adding the object containing the scraped data
-            // to the itemList array
-            itemList.push(item)
         })
 
     // trasforming the scraped data into a general object
